@@ -11,11 +11,13 @@ class UserController extends Controller
 {
     public function store(UserRequest $request)
     {
-       // Valider les données de la requête
-       $validated = $request->validated();
+        // Valider les données de la requête
+        $validated = $request->validated();
 
-        $user = User::create($request->all());
+        // Créer un nouvel utilisateur
+        $user = User::create($validated);
 
+        // Retourner la réponse
         return response()->json($user, 201);
     }
 }
