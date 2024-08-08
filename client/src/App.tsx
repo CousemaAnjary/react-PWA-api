@@ -1,5 +1,6 @@
-import Home from "./pages/Home"
+
 import { Route, Routes } from "react-router-dom"
+import User from "./pages/User"
 
 
 
@@ -20,7 +21,7 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<User />} />
 
       </Routes>
     </>
