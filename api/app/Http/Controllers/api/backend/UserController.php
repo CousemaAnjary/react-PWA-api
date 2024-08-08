@@ -3,21 +3,16 @@
 namespace App\Http\Controllers\api\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\api\backend\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string',
-            'age' => 'required|integer',
-            'image_path' => 'nullable|string',
-        ]);
+       // Valider les données de la requête
+       $validated = $request->validated();
 
         $user = User::create($request->all());
 
