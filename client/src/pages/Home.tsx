@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button"
+
 export default function Home() {
     /**
      * ! STATE (état, données) de l'application
@@ -17,6 +19,7 @@ export default function Home() {
             <h1 className="text-3xl font-bold underline">
                 Hello world!
             </h1>
+            <Button>Click me</Button>
         </>
     )
 }
