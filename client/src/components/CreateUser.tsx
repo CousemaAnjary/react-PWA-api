@@ -12,7 +12,7 @@ const formSchema = z.object({
     last_name: z.string().min(2, { message: "Le nom doit contenir au moins 2 caractères" }),
     first_name: z.string().min(2, { message: "Le prénom doit contenir au moins 2 caractères" }),
     email: z.string().email({ message: "Adresse e-mail invalide" }),
-    age: z.number().int().positive({ message: "L'âge doit être un nombre positif" }),
+    age: z.number(),
     image: z.instanceof(File).optional()
 });
 
@@ -34,7 +34,7 @@ export default function CreateUser() {
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
-    const onSubmit = (data: UserType) => {
+    const handleSubmit = (data: UserType) => {
         console.log(data)
         // Envoyer les données au serveur ou les stocker localement
     };
@@ -46,7 +46,7 @@ export default function CreateUser() {
         <>
             <div className="p-8 max-w-lg w-full">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <form onSubmit={form.handleSubmit(handleSubmit)}>
 
                         <div className="grid gap-4">
                             <div className="grid grid-cols-2 gap-4">
@@ -57,7 +57,7 @@ export default function CreateUser() {
                                             <FormItem>
                                                 <FormLabel>Nom</FormLabel>
                                                 <FormControl>
-                                                    <Input {...field} type="text" placeholder="ABDILLAH" />
+                                                    <Input {...field} placeholder="ABDILLAH" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -72,7 +72,7 @@ export default function CreateUser() {
                                             <FormItem>
                                                 <FormLabel>Prénom</FormLabel>
                                                 <FormControl>
-                                                    <Input {...field} type="text" placeholder="Cousema Anjary" />
+                                                    <Input {...field} placeholder="Cousema Anjary" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -88,7 +88,7 @@ export default function CreateUser() {
                                         <FormItem>
                                             <FormLabel>Email</FormLabel>
                                             <FormControl>
-                                                <Input {...field} type="email" placeholder="exemple@gmail.com" />
+                                                <Input {...field} placeholder="exemple@gmail.com" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -119,9 +119,7 @@ export default function CreateUser() {
                                             <FormLabel>Image</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    {...field}
                                                     type="file"
-
                                                     onChange={(e) => { field.onChange(e.target.files ? e.target.files[0] : undefined) }}
                                                 />
                                             </FormControl>

@@ -1,6 +1,7 @@
 import api from "./config/apiConfig"
 import { UserType } from "@/typeScript/Type"
 
+
 // Inscrire un nouvel utilisateur
 export const createUser = async (dataUser: UserType) => {
     try {
