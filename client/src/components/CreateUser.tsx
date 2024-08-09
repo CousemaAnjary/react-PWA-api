@@ -14,7 +14,7 @@ const formSchema = z.object({
     first_name: z.string().min(2, { message: "Le prénom doit contenir au moins 2 caractères" }),
     email: z.string().email({ message: "Adresse e-mail invalide" }),
     age: z.number().int().positive({ message: "L'âge doit être un nombre positif" }),
-    image: z.instanceof(File).optional()
+    image_path: z.instanceof(File).optional()
 });
 
 export default function CreateUser() {
@@ -28,7 +28,7 @@ export default function CreateUser() {
             first_name: "",
             email: "",
             age: 1,
-            image: undefined
+            image_path: undefined
         },
     });
 
@@ -42,7 +42,7 @@ export default function CreateUser() {
             first_name: data.first_name,
             email: data.email,
             age: data.age,
-            image: data.image
+            image_path: data.image_path
         }
 
         try {
@@ -131,7 +131,7 @@ export default function CreateUser() {
 
                             <div className="grid gap-2">
                                 <FormField
-                                    name="image"
+                                    name="image_path"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Image</FormLabel>

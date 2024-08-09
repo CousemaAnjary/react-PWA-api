@@ -15,10 +15,10 @@ class UserController extends Controller
         $validated = $request->validated();
 
         // Vérifier si l'image est envoyée
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('image_path')) {
 
-            // Stocker l'image dans le dossier de stockage 'images' du disque 'public'
-            $validated['image'] = $request->file('image')->store('images', 'public');
+            //Stocker l'image_path dans le dossier de stockage 'images' du disque 'public' 
+            $validated['image_path'] = $request->file('image_path')->store('images', 'public');
         }
 
         // Créer un nouvel utilisateur

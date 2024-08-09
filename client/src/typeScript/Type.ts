@@ -5,5 +5,5 @@ export type UserType = {
     first_name: string
     email: string
     age: number
-    image?: File
+    image_path?: File
 }
