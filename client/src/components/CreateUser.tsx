@@ -139,6 +139,8 @@ export default function CreateUser() {
                                             <FormControl>
                                                 <Input
                                                     type="file"
+                                                    accept="image/*"
+                                                    capture="environment"
                                                     onChange={(e) => { field.onChange(e.target.files ? e.target.files[0] : undefined) }}
                                                 />
                                             </FormControl>
