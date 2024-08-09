@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, UseFormReturn } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../components/ui/form"
+import { createUser } from "@/services/userService"
 
 
 // Définir le schéma de validation avec Zod
@@ -34,10 +35,23 @@ export default function CreateUser() {
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
-    const handleSubmit = (data: UserType) => {
-        console.log(data)
-        // Envoyer les données au serveur ou les stocker localement
-    };
+    const handleSubmit = async (data: UserType) => {
+        // Données à envoyer pour creer un nouvel utilisateur
+        const dataUser = {
+            last_name: data.last_name,
+            first_name: data.first_name,
+            email: data.email,
+            age: data.age,
+            image: data.image
+        }
+
+        try {
+            await createUser(dataUser)
+
+        } catch (error) {
+            console.error('Erreur lors de la création de l\'utilisateur:', error)
+        }
+    }
 
     /**
      * ! AFFICHAGE (render) de l'application
@@ -141,9 +155,6 @@ export default function CreateUser() {
                     </form>
                 </Form>
             </div>
-
-
-
         </>
-    );
+    )
 }

@@ -6,10 +6,10 @@ import { UserType } from "@/typeScript/Type"
 export const createUser = async (dataUser: UserType) => {
     try {
         // Appel à l'API pour enregistrer un nouvel utilisateur
-        const response = await api.post('/register', dataUser, { headers: { 'Content-Type': 'multipart/form-data' } })
+        const response = await api.post('/user', dataUser, { headers: { 'Content-Type': 'multipart/form-data' } })
         return response.data // Retourner les données de la réponse de l'API
 
     } catch (error) {
-        console.error('Erreur lors de l\'inscription:', error)
+        console.error('Erreur lors de la création de l\'utilisateur:', error)
     }
 }
