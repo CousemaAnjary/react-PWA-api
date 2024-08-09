@@ -9,6 +9,10 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    host: true, //permet à Vite d'utiliser votre adresse IP locale
+    port: 5174, //port de votre serveur
+  },
 
   build: {
     rollupOptions: {
