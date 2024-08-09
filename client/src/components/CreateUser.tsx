@@ -26,7 +26,7 @@ export default function CreateUser() {
             last_name: "",
             first_name: "",
             email: "",
-            age: 0,
+            age: 1,
             image: undefined
         },
     });
@@ -104,9 +104,9 @@ export default function CreateUser() {
                                             <FormLabel>Âge</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    type="text"
+                                                    type="number"
                                                     value={field.value}
-                                                    onChange={(e) => field.onChange(e.target.value)}
+                                                    onChange={(e) => field.onChange(Number(e.target.value))}
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -142,7 +142,7 @@ export default function CreateUser() {
                 </Form>
             </div>
 
-            
+
 
         </>
     );
