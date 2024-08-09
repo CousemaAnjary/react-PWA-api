@@ -12,7 +12,7 @@ const formSchema = z.object({
     last_name: z.string().min(2, { message: "Le nom doit contenir au moins 2 caractères" }),
     first_name: z.string().min(2, { message: "Le prénom doit contenir au moins 2 caractères" }),
     email: z.string().email({ message: "Adresse e-mail invalide" }),
-    age: z.number(),
+    age: z.number().int().positive({ message: "L'âge doit être un nombre positif" }),
     image: z.instanceof(File).optional()
 });
 
@@ -103,7 +103,11 @@ export default function CreateUser() {
                                         <FormItem>
                                             <FormLabel>Âge</FormLabel>
                                             <FormControl>
-                                                <Input {...field} type="number" />
+                                                <Input
+                                                    type="text"
+                                                    value={field.value}
+                                                    onChange={(e) => field.onChange(e.target.value)}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -134,15 +138,11 @@ export default function CreateUser() {
                             </div>
 
                         </div>
-
-
-
-
-
-
                     </form>
                 </Form>
             </div>
+
+            
 
         </>
     );
