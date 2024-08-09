@@ -2,10 +2,11 @@ import { z } from "zod"
 import { UserType } from "@/typeScript/Type"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { createUser } from "@/services/userService"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, UseFormReturn } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../components/ui/form"
-import { createUser } from "@/services/userService"
+
 
 
 // Définir le schéma de validation avec Zod
