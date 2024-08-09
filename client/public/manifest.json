@@ -1,0 +1,15 @@
+{
+    "name": "Mini PWA",
+    "short_name": "MiniPWA",
+    "description": "Une mini application PWA avec React et Laravel",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "sizes": "192x192"
+        }
+    ]
+}
