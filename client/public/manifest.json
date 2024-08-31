@@ -1,6 +1,6 @@
 {
   "short_name": "MyPWA",
-  "name": "todo",
+  "name": "Todo-Liste",
   "icons": [
     {
       "src": "logo/manifest-icon-192.maskable.png",
