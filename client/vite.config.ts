@@ -17,7 +17,22 @@ export default defineConfig({
       name: 'client',
       short_name: 'client',
       description: 'client',
+      icons: [
+        {
+          src: "/favicon-192x192.png",
+          sizes: "192x192",
+          type: "image/png"
+        },
+        {
+          src: "/favicon-512x512.png",
+          sizes: "512x512",
+          type: "image/png"
+        }
+      ],
+      start_url: ".",
+      display: "standalone",
       theme_color: '#ffffff',
+      background_color: '#ffffff'
     },
 
     workbox: {
