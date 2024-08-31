@@ -29,10 +29,7 @@ export default defineConfig({
           type: "image/png"
         }
       ],
-      start_url: ".",
-      display: "standalone",
       theme_color: '#ffffff',
-      background_color: '#ffffff'
     },
 
     workbox: {
