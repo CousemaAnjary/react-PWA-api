@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), VitePWA({
+    includeAssets: ['favicon.ico', 'apple-touch-icon-180x180', 'maskable-icon-512x512.png'],
     registerType: 'autoUpdate',
     injectRegister: false,
 
