@@ -50,6 +50,7 @@ export default defineConfig({
 
     injectManifest: {
       globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
+      swDest: 'dist/sw.js',
     },
 
     devOptions: {
