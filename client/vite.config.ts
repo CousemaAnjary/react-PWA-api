@@ -17,8 +17,8 @@ export default defineConfig({
     },
 
     manifest: {
-      name: 'client',
-      short_name: 'client',
+      name: 'kanban',
+      short_name: 'kanban',
       description: 'client',
       theme_color: '#ffffff',
     },
