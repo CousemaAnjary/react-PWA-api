@@ -6,20 +6,23 @@ export default function App() {
    */
   const [count, setCount] = useState(0)
 
+
   /**
    * ! COMPORTEMENT (méthodes, fonctions) de l'application
    */
-  const handleIncremente = () => {
+  function handleIncrementation() {
     setCount(count + 1)
   }
+
 
   /**
    * ! AFFICHAGE (render) de l'application
    */
   return (
     <>
-      <p>Compteur : {count}</p>
-      <button onClick={handleIncremente}>Incrementer</button>
+      <h1>app</h1>
+      <p>{count}</p>
+      <button onClick={handleIncrementation}>Incrementation</button>
     </>
   )
 }

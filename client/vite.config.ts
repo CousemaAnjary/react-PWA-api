@@ -19,8 +19,10 @@ export default defineConfig({
     manifest: {
       name: 'kanban',
       short_name: 'kanban',
-      description: 'client',
+      description: 'A simple kanban board',
       theme_color: '#ffffff',
+      start_url: '/',
+      display: 'standalone',
     },
 
     injectManifest: {

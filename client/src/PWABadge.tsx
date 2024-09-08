@@ -7,7 +7,7 @@ function PWABadge() {
   const period = 60 * 60 * 1000
 
   const {
-    
+    offlineReady: [offlineReady, setOfflineReady],
     needRefresh: [needRefresh, setNeedRefresh],
     updateServiceWorker,
   } = useRegisterSW({
@@ -27,22 +27,22 @@ function PWABadge() {
   })
 
   function close() {
-    
+    setOfflineReady(false)
     setNeedRefresh(false)
   }
 
   return (
     <div className="PWABadge" role="alert" aria-labelledby="toast-message">
-      { (needRefresh)
+      { (offlineReady || needRefresh)
       && (
         <div className="PWABadge-toast">
           <div className="PWABadge-message">
-            <span id="toast-message">New content available, click on reload button to update.</span>
-              
-              
+            { offlineReady
+              ? <span id="toast-message">App ready to work offline</span>
+              : <span id="toast-message">New content available, click on reload button to update.</span>}
           </div>
           <div className="PWABadge-buttons">
-            <button className="PWABadge-toast-button" onClick={() => updateServiceWorker(true)}>Reload</button>
+            { needRefresh && <button className="PWABadge-toast-button" onClick={() => updateServiceWorker(true)}>Reload</button> }
             <button className="PWABadge-toast-button" onClick={() => close()}>Close</button>
           </div>
         </div>
