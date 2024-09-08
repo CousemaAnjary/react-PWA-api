@@ -23,7 +23,6 @@ export default defineConfig({
       theme_color: '#ffffff',
       start_url: '/',
       display: 'standalone',
-
     },
 
     injectManifest: {
