@@ -1,4 +1,6 @@
-import { Button } from "./components/ui/button";
+import { Route, Routes } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+
 
 export default function App() {
   /**
@@ -16,10 +18,9 @@ export default function App() {
    */
   return (
     <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-      <Button size={"sm"}>Click me!</Button>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+      </Routes>
     </>
   )
 }
