@@ -14,6 +14,20 @@ export default function Navbar() {
      */
     return (
         <>
+            <nav>
+                <div className="logo">
+                    <img src="" alt="" />
+                </div>
+
+                <div className="navbar">
+                    <ul>
+                        <li><a href="">Dashobard</a></li>
+                        <li><a href="">Project</a></li>
+                        <li><a href="">Contact</a></li>
+                    </ul>
+                </div>
+
+            </nav>
         </>
     )
 }

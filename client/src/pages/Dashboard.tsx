@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 
 export default function Dashboard() {
     /**
@@ -17,7 +18,9 @@ export default function Dashboard() {
         <>
             <div>
                 {/* En-tête */}
-                <header></header>
+                <header>
+                    <Navbar />
+                </header>
 
                 {/* Contenu */}
                 <main></main>
