@@ -25,9 +25,9 @@ export default function Navbar() {
 
                     <div className="navbar">
                         <ul className="flex gap-2 mr-10">
-                            <li><Link to="#"><Button variant={"ghost"} className="font-semibold">Dashobard</Button></Link></li>
-                            <li><Link to="#"><Button variant={"ghost"} className="font-semibold">To-do</Button></Link></li>
-                            <li><Link to="#"><Button variant={"ghost"} className="font-semibold">Users</Button></Link></li>
+                            <li><Link to="#"><Button variant={"ghost"} className="font-semibold font-mono">Dashobard</Button></Link></li>
+                            <li><Link to="#"><Button variant={"ghost"} className="font-semibold font-mono">To-do</Button></Link></li>
+                            <li><Link to="#"><Button variant={"ghost"} className="font-semibold font-mono">Users</Button></Link></li>
                         </ul>
                     </div>
                 </div>
