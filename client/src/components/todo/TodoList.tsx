@@ -1,28 +1,29 @@
-import { CirclePlus, Ellipsis, Eraser } from "lucide-react";
-import { Button } from "../ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { Form, FormControl, FormField, FormItem } from "../ui/form";
-import { Input } from "../ui/input";
-import { z } from "zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod"
+import { useState } from "react"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { CirclePlus, Ellipsis, Eraser } from "lucide-react"
+import { Form, FormControl, FormField, FormItem } from "../ui/form"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
+
 
 // Définir le schéma de validation avec Zod
 const formSchema = z.object({
     name: z.string().min(2, { message: "Le nom doit contenir au moins 2 caractères" }),
 })
 
+// Le type des données du formulaire
 type KanbanCardType = {
     name: string
 }
-
 
 export default function TodoList() {
     /**
      * ! STATE (état, données) de l'application
      */
-    const [isAdding, setIsAdding] = useState(false)
+    const [isAdding] = useState(false)
 
     const form = useForm<KanbanCardType>({
         resolver: zodResolver(formSchema),
