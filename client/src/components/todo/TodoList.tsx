@@ -123,8 +123,8 @@ export default function TodoList() {
                     <form onSubmit={form.handleSubmit(handleSubmit)}>
                         <CardContent className="flex-1 space-y-2 px-4 py-1 overflow-visible transition-all duration-200 ease-in-out">
 
-                            {todoCards.map((card) => (
-                                <TodoCard key={card.id} {...card} />
+                            {todoCards.map((card, index) => (
+                                <TodoCard key={index} card={card} />
                             ))}
 
                             {isAdding && (

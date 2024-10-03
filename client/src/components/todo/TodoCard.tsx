@@ -3,9 +3,10 @@ import { Trash2 } from "lucide-react"
 import { Button } from "../ui/button"
 import { Checkbox } from "../ui/checkbox"
 import { Card, CardContent } from "../ui/card"
+import { TodoCardProps } from "@/typeScript/Todo"
 
 
-export default function TodoCard() {
+export default function TodoCard({ card }: TodoCardProps) {
     /**
      * ! STATE (état, données) de l'application
      */
@@ -37,12 +38,13 @@ export default function TodoCard() {
                                 checked={isChecked}
                                 onCheckedChange={handleCheckboxChange}
                                 className="mr-2"
+                                
                             />
                             <p
                                 className={`text-sm break-words overflow-hidden text-ellipsis ${isChecked ? 'line-through' : ''
                                     }`}
                             >
-                                Implémenter l'authentification des utilisateurs
+                                {card.name}
                             </p>
                         </div>
                         <Button

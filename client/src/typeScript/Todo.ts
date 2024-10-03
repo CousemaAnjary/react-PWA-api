@@ -4,3 +4,7 @@ export type TodoCardType = {
     name: string
     is_completed: boolean
 }
+
+export type TodoCardProps = {
+    card: TodoCardType
+}
