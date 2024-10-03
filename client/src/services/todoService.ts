@@ -1,3 +1,4 @@
+import { TodoCardType } from '@/typeScript/Todo'
 import api from './apiConfig'
 
 
@@ -5,8 +6,8 @@ import api from './apiConfig'
 export const getTodos = async () => {
     try {
         // Appeler l'API pour récupérer les tâches
-        const response = await api.get('/todos')
-        return response.data // Retourner les données de la réponse
+        const response = await api.get('/todo-cards')
+        return response.data.todoCards // Retourner les données de la réponse
 
     } catch (error) {
         // Gérer les erreurs
@@ -15,10 +16,10 @@ export const getTodos = async () => {
 }
 
 // Ajouter une tâche 
-export const addTodo = async (todo) => {
+export const addTodo = async (dataTodo: TodoCardType) => {
     try {
         // Appeler l'API pour ajouter une tâche
-        const response = await api.post('/todos', todo)
+        const response = await api.post('/todo-card', dataTodo)
         return response.data // Retourner les données de la réponse
 
     } catch (error) {
@@ -27,28 +28,28 @@ export const addTodo = async (todo) => {
     }
 }
 
-// Mettre à jour une tâche
-export const updateTodo = async (id, todo) => {
-    try {
-        // Appeler l'API pour mettre à jour une tâche
-        const response = await api.put(`/todos/${id}`, todo)
-        return response.data // Retourner les données de la réponse
+// // Mettre à jour une tâche
+// export const updateTodo = async (id, todo) => {
+//     try {
+//         // Appeler l'API pour mettre à jour une tâche
+//         const response = await api.put(`/todos/${id}`, todo)
+//         return response.data // Retourner les données de la réponse
 
-    } catch (error) {
-        // Gérer les erreurs
-        console.error(error)
-    }
-}
+//     } catch (error) {
+//         // Gérer les erreurs
+//         console.error(error)
+//     }
+// }
 
-// Supprimer une tâche
-export const deleteTodo = async (id) => {
-    try {
-        // Appeler l'API pour supprimer une tâche
-        const response = await api.delete(`/todos/${id}`)
-        return response.data // Retourner les données de la réponse
+// // Supprimer une tâche
+// export const deleteTodo = async (id) => {
+//     try {
+//         // Appeler l'API pour supprimer une tâche
+//         const response = await api.delete(`/todos/${id}`)
+//         return response.data // Retourner les données de la réponse
 
-    } catch (error) {
-        // Gérer les erreurs
-        console.error(error)
-    }
-}
+//     } catch (error) {
+//         // Gérer les erreurs
+//         console.error(error)
+//     }
+// }

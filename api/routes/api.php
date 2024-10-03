@@ -9,7 +9,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/user', [UserController::class, 'store']);
 
 // Route to  todo cards
 Route::get('/todo-cards', [TodoCardController::class, 'getTodoCards']);

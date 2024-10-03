@@ -3,11 +3,14 @@ import TodoCard from "./TodoCard"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { useForm } from "react-hook-form"
+import { TodoCardType } from "@/typeScript/Todo"
 import { useEffect, useRef, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CirclePlus, CopyMinus, Ellipsis } from "lucide-react"
 import { Form, FormControl, FormField, FormItem } from "../ui/form"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
+import { addTodo, getTodos } from "@/services/todoService"
+
 
 
 // Définir le schéma de validation avec Zod
@@ -15,19 +18,15 @@ const formSchema = z.object({
     name: z.string().min(2, { message: "Le nom doit contenir au moins 2 caractères" }),
 })
 
-// Le type des données du formulaire
-type KanbanCardType = {
-    name: string
-}
-
 export default function TodoList() {
     /**
      * ! STATE (état, données) de l'application
      */
     const [isAdding, setIsAdding] = useState(false)
     const addCardRef = useRef<HTMLDivElement>(null)
+    const [todoCards, setTodoCards] = useState<TodoCardType[]>([])
 
-    const form = useForm<KanbanCardType>({
+    const form = useForm<TodoCardType>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
@@ -37,6 +36,24 @@ export default function TodoList() {
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
      */
+    useEffect(() => {
+        // Récupérer les tâches
+        const fetchTodos = async () => {
+            try {
+                // Appeler l'API pour récupérer les tâches
+                const todos = await getTodos()
+                setTodoCards(todos) // Mettre à jour les tâches
+
+            } catch (error) {
+                // Gérer les erreurs
+                console.error(error)
+            }
+        }
+
+        fetchTodos() // Appeler la fonction pour récupérer les tâches
+    }, [])
+
+
     // Écouter les clics de l'utilisateur
     useEffect(() => {
         // Écouter les clics de l'utilisateur
@@ -64,7 +81,27 @@ export default function TodoList() {
     }
 
     // Soumettre le formulaire d'ajout de carte
-    const handleSubmit = async (): Promise<void> => {
+    const handleSubmit = async (data: TodoCardType): Promise<void> => {
+
+        // Données à envoyer au serveur
+        const todo = {
+            id: "",
+            name: data.name,
+            is_completed: false
+        }
+
+        try {
+
+            // Appeler l'API pour ajouter une tâche
+            await addTodo(todo)
+            // Réinitialiser le formulaire
+            form.reset({ name: '' })
+            setIsAdding(false) // Fermer le formulaireF
+
+        } catch (error) {
+            // Gérer les erreurs
+            console.error(error)
+        }
     }
 
     /**
@@ -84,9 +121,11 @@ export default function TodoList() {
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSubmit)}>
-                        <CardContent className="flex-1 space-y-2 px-4 py-1 overflow-visible transition-all duration-200 ease-in-out"      >
+                        <CardContent className="flex-1 space-y-2 px-4 py-1 overflow-visible transition-all duration-200 ease-in-out">
 
-                            <TodoCard />
+                            {todoCards.map((card) => (
+                                <TodoCard key={card.id} {...card} />
+                            ))}
 
                             {isAdding && (
                                 <div className="flex flex-col justify-between h-full">
