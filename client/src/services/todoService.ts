@@ -28,28 +28,28 @@ export const addTodo = async (dataTodo: TodoCardType) => {
     }
 }
 
-// // Mettre à jour une tâche
-// export const updateTodo = async (id, todo) => {
-//     try {
-//         // Appeler l'API pour mettre à jour une tâche
-//         const response = await api.put(`/todos/${id}`, todo)
-//         return response.data // Retourner les données de la réponse
+// Mettre à jour une tâche
+export const updateTodo = async (id: string, dataTodo: TodoCardType) => {
+    try {
+        // Appeler l'API pour mettre à jour une tâche
+        const response = await api.put(`/todo-card/${id}`, dataTodo);
+        return response.data // Retourner les données de la réponse
 
-//     } catch (error) {
-//         // Gérer les erreurs
-//         console.error(error)
-//     }
-// }
+    } catch (error) {
+        // Gérer les erreurs
+        console.error(error)
+    }
+}
 
-// // Supprimer une tâche
-// export const deleteTodo = async (id) => {
-//     try {
-//         // Appeler l'API pour supprimer une tâche
-//         const response = await api.delete(`/todos/${id}`)
-//         return response.data // Retourner les données de la réponse
+// Supprimer une tâche
+export const deleteTodo = async (id: string) => {
+    try {
+        // Appeler l'API pour supprimer une tâche
+        const response = await api.delete(`/todo-card/${id}`)
+        return response.data // Retourner les données de la réponse
 
-//     } catch (error) {
-//         // Gérer les erreurs
-//         console.error(error)
-//     }
-// }
+    } catch (error) {
+        // Gérer les erreurs
+        console.error(error)
+    }
+}

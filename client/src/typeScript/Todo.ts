@@ -7,4 +7,6 @@ export type TodoCardType = {
 
 export type TodoCardProps = {
     card: TodoCardType
+    onDelete: (id: string) => void
+    onUpdate: (id: string, data: TodoCardType) => void
 }

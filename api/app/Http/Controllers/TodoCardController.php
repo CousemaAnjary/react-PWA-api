@@ -33,7 +33,7 @@ class TodoCardController extends Controller
         ]);
     }
 
-    public function updateTodoCard(TodoCardRequest  $request, $id)
+    public function updateTodoCard(TodoCardRequest $request, $id)
     {
         // Récupération de la todo card
         $todoCard = TodoCard::find($id);

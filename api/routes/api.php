@@ -13,5 +13,5 @@ Route::get('/user', function (Request $request) {
 // Route to  todo cards
 Route::get('todo-cards', [TodoCardController::class, 'getTodoCards']);
 Route::post('todo-card', [TodoCardController::class, 'storeTodoCard']);
-Route::put('/todo-card/{id}', [TodoCardController::class, 'updateTodoCard']);
+Route::put('todo-card/{id}', [TodoCardController::class, 'updateTodoCard']);
 Route::delete('/todo-card/{id}', [TodoCardController::class, 'destroyTodoCard']);

@@ -6,11 +6,11 @@ import { Card, CardContent } from "../ui/card"
 import { TodoCardProps } from "@/typeScript/Todo"
 
 
-export default function TodoCard({ card }: TodoCardProps) {
+export default function TodoCard({ card, onDelete, onUpdate }: TodoCardProps) {
     /**
      * ! STATE (état, données) de l'application
      */
-    const [isChecked, setIsChecked] = useState(false)
+    const [isChecked, setIsChecked] = useState(card.is_completed);
 
     /**
      * ! COMPORTEMENT (méthodes, fonctions) de l'application
@@ -18,10 +18,13 @@ export default function TodoCard({ card }: TodoCardProps) {
     // Gérer le changement de la checkbox
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked)
+        // Mettre à jour la tâche pour refléter l'état de complétion
+        onUpdate(card.id, { ...card, is_completed: !isChecked });
     }
 
     // Gérer la suppression de la tâche
     const handleDelete = async (): Promise<void> => {
+        onDelete(card.id);
     }
 
     /**
@@ -38,7 +41,7 @@ export default function TodoCard({ card }: TodoCardProps) {
                                 checked={isChecked}
                                 onCheckedChange={handleCheckboxChange}
                                 className="mr-2"
-                                
+
                             />
                             <p
                                 className={`text-sm break-words overflow-hidden text-ellipsis ${isChecked ? 'line-through' : ''
