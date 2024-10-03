@@ -94,6 +94,7 @@ export default function TodoList() {
 
             // Appeler l'API pour ajouter une tâche
             await addTodo(todo)
+
             // Réinitialiser le formulaire
             form.reset({ name: '' })
             setIsAdding(false) // Fermer le formulaireF

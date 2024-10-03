@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TodoCardRequest;
 use App\Models\TodoCard;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Cast\String_;
 
 class TodoCardController extends Controller
 {
@@ -16,7 +15,7 @@ class TodoCardController extends Controller
 
         return response()->json([
             'todoCards' => $todoCards,
-            'message' => 'Liste des todo cards récupérée avec succès'
+            'message' => 'Listae des todo cards récupérée avec succès'
         ]);
     }
 

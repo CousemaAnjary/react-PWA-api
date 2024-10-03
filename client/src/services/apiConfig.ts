@@ -25,7 +25,7 @@ api.interceptors.request.use((config) => {
     config.headers = config.headers || {}
 
     // Ajouter le Content-Type pour les requêtes POST avec des données JSON
-    config.headers['Content-Type'] = `multipart/form-data`
+    config.headers['Content-Type'] = `application/json`;
 
     return config
 
