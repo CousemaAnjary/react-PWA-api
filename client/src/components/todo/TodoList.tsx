@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { CirclePlus, Ellipsis, Eraser } from "lucide-react"
 import { Form, FormControl, FormField, FormItem } from "../ui/form"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
+import TodoCard from "./TodoCard"
 
 
 // Définir le schéma de validation avec Zod
@@ -58,16 +59,8 @@ export default function TodoList() {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleSubmit)}>
                         <CardContent className="flex-1 space-y-2 px-4 py-1 overflow-visible transition-all duration-200 ease-in-out"      >
-                            {/* 
-                            {loading ? (
-                                Array(cards.length || 1).fill(null).map((_, index) => (
-                                    <SkeletonCard key={index} />
-                                ))
-                            ) : (
-                                cards.map((card, index) => (
-                                    <KanbanCard key={card.id} card={card} index={index} onDelete={handleDeleteCard} />
-                                ))
-                            )} */}
+
+                            <TodoCard />
 
                             {isAdding && (
                                 <div className="flex flex-col justify-between h-full">
@@ -110,7 +103,6 @@ export default function TodoList() {
                             variant="outline"
                             size={"sm"}
                             className="w-full justify-start items-center font-medium"
-
                         >
                             <CirclePlus className="mr-2 h-4 w-4" />
                             Ajouter une liste
