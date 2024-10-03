@@ -73,16 +73,18 @@ export default function TodoList() {
         };
 
         try {
-            // Appeler l'API pour ajouter une tâche
-            const response = await addTodo(todo);
+            const response = await addTodo(todo);  // Background Sync prend en charge les requêtes échouées
             const newTodoCard = response.todoCard;
-            setTodoCards([...todoCards, newTodoCard]); // Ajouter la nouvelle tâche à la liste
+            setTodoCards([...todoCards, newTodoCard]);
             form.reset({ name: "" });
-            setIsAdding(false); // Fermer le formulaire après ajout
+            setIsAdding(false);
         } catch (error) {
             console.error("Erreur lors de l'ajout de la tâche", error);
         }
     };
+
+
+
 
     // Gérer la mise à jour d'une tâche
     const handleUpdate = async (id: string, updatedTodo: TodoCardType) => {

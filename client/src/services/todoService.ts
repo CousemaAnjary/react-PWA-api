@@ -4,17 +4,10 @@ import api from './apiConfig'
 
 // Récupérer la liste des tâches
 export const getTodos = async () => {
-    if (!navigator.onLine) {
-        console.log('Vous êtes hors ligne, récupération des données locales...');
-        // Charger les tâches à partir du localStorage ou d'un autre stockage local
-        const offlineTodos = JSON.parse(localStorage.getItem('offlineTodos') || '[]') as TodoCardType[];
-        return offlineTodos; // Retourner les tâches locales
-    }
-
     try {
+        // Si l'utilisateur est en ligne, récupérer les tâches depuis l'API
         const response = await api.get('/todo-cards');
-        return response.data.todoCards; // Retourner les données de la réponse si en ligne
-        
+        return response.data.todoCards; // Retourner les données récupérées de l'API
     } catch (error) {
         console.error('Erreur lors de la récupération des tâches', error);
         throw error;

@@ -1,41 +1,41 @@
 /// <reference lib="webworker" />
-import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching'
-import { clientsClaim } from 'workbox-core'
-import { NavigationRoute, registerRoute } from 'workbox-routing'
-import { BackgroundSyncPlugin } from 'workbox-background-sync'
-import { NetworkOnly } from 'workbox-strategies'
+import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
+import { clientsClaim } from 'workbox-core';
+import { NavigationRoute, registerRoute } from 'workbox-routing';
+import { BackgroundSyncPlugin } from 'workbox-background-sync';
+import { NetworkOnly } from 'workbox-strategies';
 
-declare let self: ServiceWorkerGlobalScope
+declare let self: ServiceWorkerGlobalScope;
 
-// self.__WB_MANIFEST is the default injection point
-precacheAndRoute(self.__WB_MANIFEST)
+// self.__WB_MANIFEST is le point d'injection par défaut
+precacheAndRoute(self.__WB_MANIFEST);
 
-// clean old assets
-cleanupOutdatedCaches()
+// Nettoyage des anciens caches
+cleanupOutdatedCaches();
 
-let allowlist: RegExp[] | undefined
-// in dev mode, we disable precaching to avoid caching issues
-if (import.meta.env.DEV) allowlist = [/^\/$/]
+let allowlist: RegExp[] | undefined;
+// Désactivation du precaching en mode dev pour éviter les problèmes de mise en cache
+if (import.meta.env.DEV) allowlist = [/^\/$/];
 
-// Serve index.html for navigation requests
+// Servir index.html pour les requêtes de navigation
 registerRoute(
   new NavigationRoute(createHandlerBoundToURL('index.html'), { allowlist })
-)
+);
 
-// Enable Background Sync for POST requests (e.g., adding a todo)
+// Configuration de Background Sync pour les requêtes POST (ex. ajout de tâches)
 const bgSyncPlugin = new BackgroundSyncPlugin('todoQueue', {
-  maxRetentionTime: 24 * 60, // Retry for max of 24 hours
-})
+  maxRetentionTime: 24 * 60, // Rétenter pendant un maximum de 24 heures
+});
 
 registerRoute(
-  // Capture requests to your API for adding a todo
+  // Capturer les requêtes POST vers l'API
   ({ url, request }) =>
     url.pathname.startsWith('/api/todo-card') && request.method === 'POST',
   new NetworkOnly({
-    plugins: [bgSyncPlugin],
+    plugins: [bgSyncPlugin], // Utilisation de Background Sync pour gérer les requêtes échouées
   }),
   'POST'
-)
+);
 
-self.skipWaiting()
-clientsClaim()
+self.skipWaiting();
+clientsClaim();
