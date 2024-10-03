@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import TodoList from "@/components/todo/TodoList";
 
 export default function Dashboard() {
     /**
@@ -16,14 +17,18 @@ export default function Dashboard() {
      */
     return (
         <>
-            <div>
+            <div className="relative min-h-screen">
                 {/* En-tête */}
                 <header>
                     <Navbar />
                 </header>
 
                 {/* Contenu */}
-                <main></main>
+                <main>
+                    <section className="flex justify-center items-center min-h-[79vh] mt-5 bg-slate-400">
+                        <TodoList />
+                    </section>
+                </main>
 
                 {/* Pied de page */}
                 <footer></footer>
