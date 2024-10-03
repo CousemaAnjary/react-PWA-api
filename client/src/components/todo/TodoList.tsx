@@ -9,18 +9,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CirclePlus, CopyMinus, Ellipsis } from "lucide-react";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { addTodo, getTodos, updateTodo, deleteTodo } from "@/services/todoService"; // Importer les services
+import { addTodo, getTodos, updateTodo, deleteTodo } from "@/services/todoService";
+import { addTodoToDB, getTodosFromDB} from "@/services/indexedDbService";
 
 
-// Définir le schéma de validation avec Zod
+
+// Schéma de validation pour le formulaire
 const formSchema = z.object({
     name: z.string().min(2, { message: "Le nom doit contenir au moins 2 caractères" }),
 });
 
 export default function TodoList() {
-    /**
-     * ! STATE (état, données) de l'application
-     */
     const [isAdding, setIsAdding] = useState(false);
     const addCardRef = useRef<HTMLDivElement>(null);
     const [todoCards, setTodoCards] = useState<TodoCardType[]>([]);
@@ -34,23 +33,25 @@ export default function TodoList() {
     });
 
     /**
-     * ! COMPORTEMENT (méthodes, fonctions) de l'application
+     * Charger les todos depuis IndexedDB au chargement de la page
      */
     useEffect(() => {
-        // Récupérer les tâches
-        const fetchTodos = async () => {
-            try {
-                const todos = await getTodos();
-                setTodoCards(todos); // Mettre à jour les tâches
-            } catch (error) {
-                console.error("Erreur lors de la récupération des tâches", error);
+        const loadTodos = async () => {
+            const localTodos = await getTodosFromDB();
+            if (localTodos.length > 0) {
+                setTodoCards(localTodos); // Mettre à jour les tâches avec celles stockées localement
+            } else {
+                const todos = await getTodos(); // Charger depuis l'API si disponible
+                setTodoCards(todos);
             }
         };
 
-        fetchTodos();
+        loadTodos();
     }, []);
 
-    // Vérifier si l'utilisateur est de retour en ligne pour synchroniser les tâches
+    /**
+     * Synchroniser les tâches en attente lorsque l'utilisateur est de retour en ligne
+     */
     useEffect(() => {
         window.addEventListener('online', syncPendingTasks);
         return () => {
@@ -73,33 +74,19 @@ export default function TodoList() {
         }
     };
 
-    // Gérer la fermeture du formulaire en cas de clic extérieur
-    useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
-    // Fermer le formulaire d'ajout de carte
-    const handleClickOutside = (event: MouseEvent) => {
-        if (addCardRef.current && !addCardRef.current.contains(event.target as Node)) {
-            setIsAdding(false); // Fermer le formulaire
-        }
-    };
-
     // Gérer la soumission du formulaire d'ajout de carte
     const handleSubmit = async (data: TodoCardType): Promise<void> => {
-        const todo = {
+        const todo: TodoCardType = {
             id: "",  // L'ID pourrait être généré par l'API lors de la synchronisation en ligne
             name: data.name,
             is_completed: false,
         };
 
         if (!navigator.onLine) {
-            // Ajouter la tâche localement si l'utilisateur est hors ligne
-            setPendingTasks([...pendingTasks, todo]);
+            // Si hors ligne, ajouter la tâche localement dans IndexedDB
+            await addTodoToDB(todo);
             setTodoCards([...todoCards, todo]); // Mettre à jour l'UI immédiatement
+            setPendingTasks([...pendingTasks, todo]); // Garder en mémoire pour la synchronisation
             form.reset({ name: "" });
             setIsAdding(false);
             console.log('Vous êtes hors ligne. La tâche sera synchronisée plus tard.');
@@ -110,6 +97,9 @@ export default function TodoList() {
             const response = await addTodo(todo);
             const newTodoCard = response.todoCard;
             setTodoCards([...todoCards, newTodoCard]);
+
+            // Ajouter la tâche dans IndexedDB pour qu'elle soit persistée
+            await addTodoToDB(newTodoCard);
             form.reset({ name: "" });
             setIsAdding(false);
         } catch (error) {
@@ -117,13 +107,10 @@ export default function TodoList() {
         }
     };
 
-
-
     // Gérer la mise à jour d'une tâche
     const handleUpdate = async (id: string, updatedTodo: TodoCardType) => {
         try {
             await updateTodo(id, updatedTodo);
-            // Mettre à jour localement l'état de la tâche dans la liste
             const updatedTodoCards = todoCards.map((card) =>
                 card.id === id ? updatedTodo : card
             );
@@ -137,7 +124,6 @@ export default function TodoList() {
     const handleDelete = async (id: string) => {
         try {
             await deleteTodo(id);
-            // Supprimer localement la tâche de la liste
             const updatedTodoCards = todoCards.filter((card) => card.id !== id);
             setTodoCards(updatedTodoCards);
         } catch (error) {
@@ -151,9 +137,6 @@ export default function TodoList() {
         form.reset({ name: "" }); // Réinitialiser le champ de saisie
     };
 
-    /**
-     * ! AFFICHAGE (render) de l'application
-     */
     return (
         <Card className="flex flex-col w-full max-w-md shadow-sm mt-8" ref={addCardRef}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
