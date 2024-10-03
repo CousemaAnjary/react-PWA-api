@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { useState } from "react"
+import TodoCard from "./TodoCard"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { useForm } from "react-hook-form"
@@ -7,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { CirclePlus, Ellipsis, Eraser } from "lucide-react"
 import { Form, FormControl, FormField, FormItem } from "../ui/form"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import TodoCard from "./TodoCard"
 
 
 // Définir le schéma de validation avec Zod
@@ -24,7 +24,7 @@ export default function TodoList() {
     /**
      * ! STATE (état, données) de l'application
      */
-    const [isAdding] = useState(false)
+    const [isAdding, setIsAdding] = useState(false)
 
     const form = useForm<KanbanCardType>({
         resolver: zodResolver(formSchema),
@@ -74,7 +74,7 @@ export default function TodoList() {
                                                         type="text"
                                                         placeholder="Entrez un titre pour cette liste"
                                                         autoFocus
-                                                        className="w-full h-12 shadow-sm"
+                                                        className="w-full h-10 shadow-sm"
                                                     />
                                                 </FormControl>
                                             </FormItem>
@@ -101,8 +101,9 @@ export default function TodoList() {
                     {!isAdding && (
                         <Button
                             variant="outline"
-                            size={"sm"}
+                            size={"default"}
                             className="w-full justify-start items-center font-medium"
+                            onClick={() => setIsAdding(true)}
                         >
                             <CirclePlus className="mr-2 h-4 w-4" />
                             Ajouter une liste
