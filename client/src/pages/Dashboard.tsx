@@ -25,7 +25,7 @@ export default function Dashboard() {
 
                 {/* Contenu */}
                 <main>
-                    <section className="flex justify-center items-start min-h-[79vh] mt-5 bg-slate-400">
+                    <section className="flex justify-center items-start min-h-[79vh] mt-5 ">
                         <TodoList />
                     </section>
                 </main>

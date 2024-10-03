@@ -44,7 +44,7 @@ export default function TodoList() {
      */
     return (
         <>
-            <Card className="flex flex-col w-full max-w-72 shadow-sm" >
+            <Card className="flex flex-col w-full max-w-md shadow-sm mt-8" >
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-semibold">To-do list</CardTitle>
 
