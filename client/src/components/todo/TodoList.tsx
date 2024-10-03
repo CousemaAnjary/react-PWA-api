@@ -67,13 +67,26 @@ export default function TodoList() {
     // Gérer la soumission du formulaire d'ajout de carte
     const handleSubmit = async (data: TodoCardType): Promise<void> => {
         const todo = {
-            id: "",
+            id: "",  // L'ID pourrait être généré par l'API lors de la synchronisation en ligne
             name: data.name,
             is_completed: false,
         };
 
+        if (!navigator.onLine) {
+            // Si hors ligne, ajouter la tâche localement et l'ajouter dans todoQueue
+            setTodoCards([...todoCards, todo]);  // Mise à jour locale immédiate
+
+            // Optionnel : Afficher un message pour indiquer que la tâche sera synchronisée
+            console.log('Vous êtes hors ligne. La tâche sera synchronisée plus tard.');
+
+            // Ici, `BackgroundSyncPlugin` dans le service worker s'occupera d'envoyer cette requête plus tard
+            form.reset({ name: "" });
+            setIsAdding(false);
+            return;
+        }
+
         try {
-            const response = await addTodo(todo);  // Background Sync prend en charge les requêtes échouées
+            const response = await addTodo(todo);
             const newTodoCard = response.todoCard;
             setTodoCards([...todoCards, newTodoCard]);
             form.reset({ name: "" });
@@ -82,7 +95,6 @@ export default function TodoList() {
             console.error("Erreur lors de l'ajout de la tâche", error);
         }
     };
-
 
 
 

@@ -24,7 +24,7 @@ registerRoute(
 
 // Configuration de Background Sync pour les requêtes POST (ex. ajout de tâches)
 const bgSyncPlugin = new BackgroundSyncPlugin('todoQueue', {
-  maxRetentionTime: 24 * 60, // Rétenter pendant un maximum de 24 heures
+  maxRetentionTime: 24 * 60, // Tentatives de synchronisation pendant 24 heures max
 });
 
 registerRoute(
