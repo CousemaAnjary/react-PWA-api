@@ -91,9 +91,10 @@ export default function TodoList() {
         }
 
         try {
-
             // Appeler l'API pour ajouter une tâche
-            await addTodo(todo)
+            const response = await addTodo(todo)
+            const newTodoCards = response.todoCard
+            setTodoCards([...todoCards, newTodoCards]) // Mettre à jour les tâches
 
             // Réinitialiser le formulaire
             form.reset({ name: '' })
