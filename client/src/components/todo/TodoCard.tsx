@@ -42,7 +42,7 @@ export default function TodoCard() {
                                 className={`text-sm break-words overflow-hidden text-ellipsis ${isChecked ? 'line-through' : ''
                                     }`}
                             >
-                                Tâche à faire 1
+                                Implémenter l'authentification des utilisateurs
                             </p>
                         </div>
                         <Button

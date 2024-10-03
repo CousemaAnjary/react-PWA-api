@@ -5,7 +5,7 @@ import { Button } from "../ui/button"
 import { useForm } from "react-hook-form"
 import { useEffect, useRef, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { CirclePlus, Ellipsis, Eraser } from "lucide-react"
+import { CirclePlus, CopyMinus, Ellipsis } from "lucide-react"
 import { Form, FormControl, FormField, FormItem } from "../ui/form"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
 
@@ -100,19 +100,19 @@ export default function TodoList() {
                                                         type="text"
                                                         placeholder="Entrez un titre pour cette liste"
                                                         autoFocus
-                                                        className="w-full h-10 shadow-sm"
+                                                        className="w-full h-10 shadow-sm rounded-sm"
                                                     />
                                                 </FormControl>
                                             </FormItem>
                                         )}
                                     />
-                                    <div className="grid grid-cols-6 gap-2 mt-3">
-                                        <Button type="submit" size={"sm"} className="col-span-5 w-full rounded-sm">
+                                    <div className="grid grid-cols-7 gap-2 mt-3">
+                                        <Button type="submit" size={"sm"} className="col-span-6 w-full rounded-sm">
                                             Ajouter
                                         </Button>
 
                                         <Button type="button" variant="outline" size={"sm"} className="w-full p-2 rounded-sm" onClick={handleCancel}>
-                                            <Eraser className="h-4 w-4" />
+                                            <CopyMinus className="h-4 w-4" />
                                         </Button>
                                     </div>
                                 </div>
