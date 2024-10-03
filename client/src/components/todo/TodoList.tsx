@@ -24,6 +24,7 @@ export default function TodoList() {
     const [isAdding, setIsAdding] = useState(false);
     const addCardRef = useRef<HTMLDivElement>(null);
     const [todoCards, setTodoCards] = useState<TodoCardType[]>([]);
+    const [pendingTasks, setPendingTasks] = useState<TodoCardType[]>([]); // Tâches en attente de synchronisation
 
     const form = useForm<TodoCardType>({
         resolver: zodResolver(formSchema),
@@ -49,6 +50,29 @@ export default function TodoList() {
         fetchTodos();
     }, []);
 
+    // Vérifier si l'utilisateur est de retour en ligne pour synchroniser les tâches
+    useEffect(() => {
+        window.addEventListener('online', syncPendingTasks);
+        return () => {
+            window.removeEventListener('online', syncPendingTasks);
+        };
+    }, [pendingTasks]);
+
+    const syncPendingTasks = async () => {
+        if (pendingTasks.length > 0) {
+            console.log('Synchronisation des tâches en attente...');
+            for (const task of pendingTasks) {
+                try {
+                    await addTodo(task);
+                    console.log('Tâche synchronisée :', task.name);
+                } catch (error) {
+                    console.error('Erreur lors de la synchronisation de la tâche:', error);
+                }
+            }
+            setPendingTasks([]); // Vider les tâches en attente après la synchronisation
+        }
+    };
+
     // Gérer la fermeture du formulaire en cas de clic extérieur
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
@@ -73,15 +97,12 @@ export default function TodoList() {
         };
 
         if (!navigator.onLine) {
-            // Si hors ligne, ajouter la tâche localement et l'ajouter dans todoQueue
-            setTodoCards([...todoCards, todo]);  // Mise à jour locale immédiate
-
-            // Optionnel : Afficher un message pour indiquer que la tâche sera synchronisée
-            console.log('Vous êtes hors ligne. La tâche sera synchronisée plus tard.');
-
-            // Ici, `BackgroundSyncPlugin` dans le service worker s'occupera d'envoyer cette requête plus tard
+            // Ajouter la tâche localement si l'utilisateur est hors ligne
+            setPendingTasks([...pendingTasks, todo]);
+            setTodoCards([...todoCards, todo]); // Mettre à jour l'UI immédiatement
             form.reset({ name: "" });
             setIsAdding(false);
+            console.log('Vous êtes hors ligne. La tâche sera synchronisée plus tard.');
             return;
         }
 
