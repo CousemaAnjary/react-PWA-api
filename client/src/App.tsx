@@ -1,6 +1,7 @@
 import Dashboard from "./pages/Dashboard"
 import { Route, Routes } from "react-router-dom"
 
+
 export default function App() {
   /**
    * ! STATE (état, données) de l'application
